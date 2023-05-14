@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 class Pool:
     def __init__(self, data, swap_fee=0.003, risk_preference="Greed", rolling_window_ratio=0.1) -> None:
         self.data = self.calculate_kpis(data, swap_fee=swap_fee, rolling_window_ratio=rolling_window_ratio)
@@ -18,11 +17,6 @@ class Pool:
         if swap_fee is None and not data["swapfee"].empty:
             swap_fee = float(data["swapfee"].iloc[0])
 
-        print(rolling_window_size)
-        rolling_volumeUSD = data["volumeUSD"]
-        #rolling_mean = rolling_volumeUSD.rolling(window=rolling_window_size).mean()
-
-      
          # Remove rows where 'volumeUSD' is smaller than the previous row
         data = data[data['volumeUSD'] >= data['volumeUSD'].shift()]
         # Compute the cumulative maximum of 'volumeUSD'
@@ -34,27 +28,6 @@ class Pool:
         # Filter the DataFrame to keep only valid rows
         data = data[mask]
 
-         # Remove rows where 'volumeUSD' is smaller than the previous row
-        #data = data[data['volumeUSD'] >= data['volumeUSD'].shift()]
-
-        # Compute the ascending cumulative average of the cleaned 'volumeUSD' column
-        #data["cumulative_avg_volumeUSD"] = data["volumeUSD"].mean()
-        # Adjust 'volumeUSD' values to make them ascending accumulating by averaging over the column
-        '''data['adjusted_volumeUSD'] = np.maximum.accumulate(data['volumeUSD'])
-        data['adjusted_volumeUSD'] = data['adjusted_volumeUSD'].rolling(window=rolling_window_size).mean()
-        data['adjusted_volumeUSD'].fillna(data['volumeUSD'], inplace=True)
-
-        # Compute the ascending cumulative average of the adjusted 'volumeUSD' column
-        data["cumulative_avg_volumeUSD"] = data["adjusted_volumeUSD"].expanding().mean()
-
-        # Compute the rolling mean of 'volumeUSD'
-        rolling_mean = rolling_volumeUSD.rolling(window=rolling_window_size).mean()
-
-        # Compute the rolling mean of 'volumeUSD'
-       #rolling_mean = rolling_volumeUSD.rolling(window=rolling_window_size).mean()
-
-        # Calculate the 'daily_volumeUSD' column
-        data['daily_volumeUSD'] = rolling_mean.diff()#data['volumeUSD'].rolling(window=10)#.diff()'''
         data['daily_volumeUSD'] = data['volumeUSD'].diff()
 
         # Helper functions for Impermanent loss calculation
@@ -88,9 +61,6 @@ class Pool:
         # Calculate IL
         initial_price_ratio = data['price_ratio_start'][:first_percentage].mean()
         data['price_ratio_change'] = data['price_ratio_start'] / initial_price_ratio
-        #data['impermanent_loss'] = np.where(data['exchange'] == 'uniswapv3', impermanent_loss_v3(data['price_ratio_change']), impermanent_loss_v2(data['price_ratio_change']))
-        #data['impermanent_loss'] = data.apply(lambda row: impermanent_loss_v3(row['price_ratio_change']) if row['exchange'] == 'uniswapv3' else impermanent_loss_v2(row['price_ratio_change']), axis=1)
-        #data['impermanent_loss'] = data.apply(lambda row: impermanent_loss_v3(row['price_ratio_change'], P=initial_price_ratio, L=L) if row['exchange'] == 'uniswapv3' else impermanent_loss_v2(row['price_ratio_change']), axis=1)
         
         #data['impermanent_loss'] = data.apply(lambda row: impermanent_loss_v3(row['price_ratio_change'], P=initial_price_ratio, L=row['L']) if row['exchange'] == 'UniV3' else impermanent_loss_v2(row['price_ratio_change']), axis=1)
         data['impermanent_loss'] = data.apply(lambda row: impermanent_loss_v2(row['price_ratio_change']), axis=1)
@@ -132,10 +102,6 @@ class Pool:
         rolling_mean = excess_return.rolling(window=rolling_window_size).mean()
         rolling_std = excess_return.rolling(window=rolling_window_size).std() + epsilon
         downside_std = excess_return.rolling(window=rolling_window_size).apply(lambda x: x[x < 0].std(ddof=1), raw=True)
-        '''downside_std = excess_return.rolling(window=rolling_window_size).apply(
-            lambda x: np.sqrt(np.mean(np.square(np.maximum(0 - x, 0)))),
-            raw=True
-        )'''
         data['sharpe_ratio'] = np.sqrt(rolling_window_size) * (rolling_mean / (rolling_std + epsilon))
         data['sortino_ratio'] = np.sqrt(rolling_window_size) * (rolling_mean / (downside_std + epsilon))
 
@@ -244,16 +210,5 @@ class Pool:
             "gain_to_pain_ratios": self.data['gain_to_pain_ratio'],
             "risk_score": risk_performance_scores
         })
-
-        '''risk_score_df = pd.DataFrame({
-            "sharpe_ratio": normalize(self.data['sharpe_ratio'], *min_max_values["sharpe_ratios"]),
-            "sortino_ratio": normalize(self.data['sortino_ratio'], *min_max_values["sortino_ratios"]),
-            "cvar": normalize(inverted_cvars, *min_max_values["inverted_cvars"]),
-            "omega_ratio": normalize(self.data['omega_ratio'], *min_max_values["omega_ratios"]),
-            "maximum_drawdown": normalize(positive_max_drawdowns, *min_max_values["max_drawdowns"]),
-            "calmar_ratio": normalize(self.data['calmar_ratio'], *min_max_values["calmar_ratios"]),
-            "gain_to_pain_ratio": normalize(self.data['gain_to_pain_ratio'], *min_max_values["gain_to_pain_ratios"]),
-            "risk_score": risk_performance_scores
-        })'''
 
         return risk_score_df
