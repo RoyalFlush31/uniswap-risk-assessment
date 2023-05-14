@@ -33,3 +33,6 @@ The application does not track or store user data, ensuring privacy for all user
 
 ### Future Enhancement:
 While the current dashboard uses historical data, future enhancements plan to include real-time data for up-to-the-minute accuracy.
+
+## How to run:
+Run app.py and head to [127.0.0.1](http://127.0.0.1:5001/)
