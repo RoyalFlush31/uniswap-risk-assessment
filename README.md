@@ -1,6 +1,9 @@
 # Uniswap Risk Assessment Score
 The Uniswap Pool Analysis Dashboard is a web-based application designed to provide users with comprehensive insights into different Uniswap and Sushiswap pools. It allows users to compare and analyze these pools based on historical data, sourced from TheGraph's Uniswap V2, Uniswap V3, and Sushiswap Subgraphs. The dashboard calculates and displays multiple risk-return ratios for each pool, and based on user's risk preference, it recommends the most suitable pools to invest in.
 
+<img width="799" alt="image" src="https://github.com/RoyalFlush31/uniswap-risk-assessment/assets/76111186/58f2fcc5-7a50-4c74-96ff-f87e9907f372">
+
+
 ### Key Features:
 Risk Preference Selection: Users can choose from five predefined risk preferences, ranging from completely risk-on to risk-off. The selection influences the pool recommendations.
 
