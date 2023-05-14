@@ -52,13 +52,30 @@ Include a "close" button to return to the main dashboard.
 ### Data Fetching:
 Use TheGraph's APIs to fetch historical data from Uniswap V2, Uniswap V3, and Sushiswap Subgraphs.
 
-## Data Processing:
+### Data Processing:
 Calculate the various ratios and returns based on rolling windows.
-Process and prepare the data for display on the dashboard.
+Processe and prepared the data for display on the dashboard.
 
-## Pool Recommendation Algorithm:
+### Pool Recommendation Algorithm:
 Use user's risk preference and timeframe to filter and sort the pools.
 Suggest the most suitable pools to the user based on the processed data.
+
+### Data Updating:
+Although the current iteration of the dashboard utilizes historical data, future versions should consider incorporating real-time or regularly updated data to provide users with the most up-to-date pool performance metrics.
+Security:
+
+### Data Privacy:
+As per the design, no user data is tracked or stored, maintaining user privacy.
+
+## Future Enhancements:
+### Real-Time Data:
+Incorporate real-time data into the dashboard to keep the pool metrics and recommendations as accurate and current as possible.
+
+### User Customization:
+Allow users to customize the dashboard, such as choosing which metrics to display or hide, and saving their preferred settings for future visits.
+
+### Additional Pool Information:
+Consider adding more pool-specific information or metrics that may be of interest to users, such as pool size, liquidity, number of swaps, etc.
 
 ## How to run:
 Run app.py and head to [127.0.0.1](http://127.0.0.1:5001/)
