@@ -34,5 +34,31 @@ The application does not track or store user data, ensuring privacy for all user
 ### Future Enhancement:
 While the current dashboard uses historical data, future enhancements plan to include real-time data for up-to-the-minute accuracy.
 
+# Detailed Outline
+## User Interface:
+### Homepage:
+Header with the product name and a brief description.
+A section for users to select their risk preference and timeframe.
+A table or grid view showing different pools along with their calculated ratios.
+Each row in the table/grid should be clickable to open a lightbox with more details about the pool.
+
+### Pool Details Lightbox:
+Display general pool information at the top.
+Show calculated ratios like Sortino, Sharpe, Calmar, Omega, Max Drawdown, gain-to-pain, and CVaRs ratios.
+Provide charts for return net percentage, impermanent loss, and daily volume in USD.
+Include a "close" button to return to the main dashboard.
+
+## Back-End:
+### Data Fetching:
+Use TheGraph's APIs to fetch historical data from Uniswap V2, Uniswap V3, and Sushiswap Subgraphs.
+
+## Data Processing:
+Calculate the various ratios and returns based on rolling windows.
+Process and prepare the data for display on the dashboard.
+
+## Pool Recommendation Algorithm:
+Use user's risk preference and timeframe to filter and sort the pools.
+Suggest the most suitable pools to the user based on the processed data.
+
 ## How to run:
 Run app.py and head to [127.0.0.1](http://127.0.0.1:5001/)
