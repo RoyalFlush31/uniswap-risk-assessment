@@ -16,6 +16,9 @@ Based on user's risk preference and timeframe, the dashboard suggests the most s
 ### Detailed Pool Information: 
 When a user selects a pool, a lightbox opens showing detailed information about the pool. This includes general pool information, all the risk-return ratios, and multiple charts such as return net percentage, impermanent loss, and daily volume in USD.
 
+<img width="801" alt="image" src="https://github.com/RoyalFlush31/uniswap-risk-assessment/assets/76111186/d2a66c85-f6b5-46ac-9fd3-f8941b12ef8c">
+
+
 ### Timeframe Selection: 
 Users can select the timeframe for which they want to view and analyze the pool data.
 
